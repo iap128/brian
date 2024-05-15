@@ -1,27 +1,41 @@
-import { Button, Input, Space, Typography } from "antd";
+import { Button, Divider, Input, Space } from "antd";
 import { useState } from "react";
+import ChatBubble, { ChatProps } from "./ChatBubble";
 
 const Chat = () => {
     //temporary array of questions
-    const [questions, setQuestions] = useState<string[]>([]);
+    const [messages, setMessages] = useState<ChatProps[]>([]);
 
     const [field, setField] = useState("");
 
     const submitQuestion = () => {
-        setQuestions([...questions, field]);
+        const question: ChatProps = {
+            message: field,
+            messageType: "question",
+        };
+        
+        const answer: ChatProps = {
+            message: "Hmm. Let me think about that.",
+            messageType: "answer",
+        };
+
+        setMessages([...messages, question, answer]);
         setField("");
     };
 
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {questions.map(question => (
-                <Typography.Text>{question}</Typography.Text>
+            {messages.map(message => (
+                <ChatBubble {...message} />
             ))}
             </div>
+
+            <Divider />
+
             <Space.Compact block>
-            <Input placeholder="What can Brian help you with today?" value={field} onChange={e => setField(e.target.value)} onPressEnter={submitQuestion}/>
-            <Button type="primary" onClick={submitQuestion}>Send</Button>
+                <Input placeholder="What can Brian help you with today?" value={field} onChange={e => setField(e.target.value)} onPressEnter={submitQuestion}/>
+                <Button type="primary" onClick={submitQuestion}>Send</Button>
             </Space.Compact>
         </div>
     );

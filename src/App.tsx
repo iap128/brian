@@ -16,7 +16,7 @@ function App() {
           padding: '0px 5%',
         }}
       >
-        <Typography.Title>Brian</Typography.Title>
+        <Typography.Title>Ask Brian</Typography.Title>
       </Header>
 
       <Content style={{ padding: '10px 30px' }}>
