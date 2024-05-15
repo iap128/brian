@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout, Button, Typography } from 'antd';
+import Chat from './chatUI/Chat';
+
+const { Header, Content, Footer } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Header
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+          height: 'auto',
+          padding: '0px 5%',
+        }}
+      >
+        <Typography.Title>Brian</Typography.Title>
+      </Header>
+
+      <Content style={{ padding: '10px 30px' }}>
+        <Chat />
+      </Content>
+
+      <Footer style={{ textAlign: 'center' }}>
+        Made with ❤️ by{' '}
+        <Button type='dashed' href='https://n818pe.com'>
+          Ryan Hunter
+        </Button>
+      </Footer>
+    </Layout>
   );
 }
 
