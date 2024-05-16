@@ -1,15 +1,14 @@
 import { Button, Divider, Input, Space } from 'antd';
 import { useState } from 'react';
-import ChatBubble, { ChatProps } from './ChatBubble';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import ChatBubble from './ChatBubble';
+import { Content, GoogleGenerativeAI } from '@google/generative-ai';
 import LoadingAnswer from './LoadingAnswer';
 import { apiKey } from '../config';
 import { marked } from 'marked';
 
 const Chat = () => {
-  const [messages, setMessages] = useState<ChatProps[]>([
-    { message: "Hi, I'm Brian. What can I help you with today?", messageType: 'answer' },
-  ]);
+  const [messages, setMessages] = useState<Content[]>([]);
+  const [chatHistory] = useState<Content[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [field, setField] = useState('');
@@ -20,13 +19,17 @@ const Chat = () => {
   const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
   const submitQuestion = async () => {
+    const chat = model.startChat({
+      history: chatHistory,
+    });
+
     //set the loading bubble
     setLoading(true);
 
     //save the question
-    const question: ChatProps = {
-      message: field,
-      messageType: 'question',
+    const question: Content = {
+      parts: [{ text: field }],
+      role: 'user',
     };
 
     //clear the field
@@ -36,14 +39,14 @@ const Chat = () => {
     setMessages([...messages, question]);
 
     //get the answer
-    const result = await model.generateContent(question.message);
+    const result = await chat.sendMessage(question.parts);
     const response = await result.response;
     const markedAnswer = await marked(response.text());
 
     //save the answer
-    const answer: ChatProps = {
-      message: markedAnswer,
-      messageType: 'answer',
+    const answer: Content = {
+      parts: [{ text: markedAnswer }],
+      role: 'model',
     };
 
     //hide the loading bubble
@@ -57,7 +60,7 @@ const Chat = () => {
     <div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {messages.map(message => (
-          <ChatBubble key={message.message} {...message} />
+          <ChatBubble key={message.parts[0].text} {...message} />
         ))}
       </div>
 
@@ -71,7 +74,6 @@ const Chat = () => {
           placeholder='Enter your question'
           value={field}
           onChange={e => setField(e.target.value)}
-          onPressEnter={submitQuestion}
         />
         <Button type='primary' onClick={submitQuestion}>
           Send

@@ -1,27 +1,23 @@
+import { Content } from '@google/generative-ai';
 import { Typography } from 'antd';
 import { FC } from 'react';
 
-export interface ChatProps {
-  message: string;
-  messageType: 'question' | 'answer';
-}
-
-const ChatBubble: FC<ChatProps> = ({ message, messageType }) => {
+const ChatBubble: FC<Content> = ({ parts, role }) => {
   return (
     <div
       style={{
         padding: '5px 10px',
         borderRadius: '10px',
         marginBottom: '5px',
-        backgroundColor: messageType === 'question' ? '#3478f6' : '#3b3b3d',
-        alignSelf: messageType === 'question' ? 'flex-end' : 'flex-start',
+        backgroundColor: role === 'user' ? '#3478f6' : '#3b3b3d',
+        alignSelf: role === 'user' ? 'flex-end' : 'flex-start',
       }}
     >
       <Typography.Text>
-        {messageType === 'question' ? (
-          message
+        {role === 'user' ? (
+          parts[0].text
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: message }} />
+          <div dangerouslySetInnerHTML={{ __html: parts[0].text as string }} />
         )}
       </Typography.Text>
     </div>
