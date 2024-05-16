@@ -1,25 +1,39 @@
+import { RobotOutlined, UserOutlined } from '@ant-design/icons';
 import { Content } from '@google/generative-ai';
-import { Typography } from 'antd';
+import { Avatar, Typography } from 'antd';
 import { FC } from 'react';
 
 const ChatBubble: FC<Content> = ({ parts, role }) => {
   return (
     <div
       style={{
-        padding: '5px 10px',
-        borderRadius: '10px',
-        marginBottom: '5px',
-        backgroundColor: role === 'user' ? '#3478f6' : '#3b3b3d',
-        alignSelf: role === 'user' ? 'flex-end' : 'flex-start',
+        display: 'flex',
+        gap: '15px',
+        flexDirection: role === 'user' ? 'row-reverse' : 'row',
+        margin: '10px 0px',
       }}
     >
-      <Typography.Text>
-        {role === 'user' ? (
-          parts[0].text
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: parts[0].text as string }} />
-        )}
-      </Typography.Text>
+      <Avatar
+        icon={role === 'user' ? <UserOutlined /> : <RobotOutlined />}
+        style={{ flexShrink: 0 }}
+      />
+
+      <div
+        style={{
+          padding: '5px 10px',
+          borderRadius: '10px',
+          marginBottom: '5px',
+          backgroundColor: role === 'user' ? '#3478f6' : '#3b3b3d',
+        }}
+      >
+        <Typography.Text>
+          {role === 'user' ? (
+            parts[0].text
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: parts[0].text as string }} />
+          )}
+        </Typography.Text>
+      </div>
     </div>
   );
 };

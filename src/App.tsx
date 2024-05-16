@@ -1,11 +1,16 @@
-import { Layout, Button, Typography } from 'antd';
+import { Layout, Button, Typography, theme } from 'antd';
 import Chat from './chatUI/Chat';
+import './App.css';
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   return (
-    <Layout>
+    <Layout className='layout'>
       <Header
         style={{
           display: 'flex',
@@ -20,7 +25,9 @@ function App() {
       </Header>
 
       <Content style={{ padding: '10px 30px' }}>
-        <Chat />
+        <div className='site-layout-content' style={{ background: colorBgContainer }}>
+          <Chat />
+        </div>
       </Content>
 
       <Footer style={{ textAlign: 'center' }}>

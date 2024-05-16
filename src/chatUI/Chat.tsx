@@ -7,7 +7,9 @@ import { apiKey } from '../config';
 import { marked } from 'marked';
 
 const Chat = () => {
-  const [messages, setMessages] = useState<Content[]>([]);
+  const [messages, setMessages] = useState<Content[]>([
+    { parts: [{ text: "Hi, I'm Brian. What can I help you with today?" }], role: 'model' },
+  ]);
   const [chatHistory] = useState<Content[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -74,6 +76,10 @@ const Chat = () => {
           placeholder='Enter your question'
           value={field}
           onChange={e => setField(e.target.value)}
+          onPressEnter={event => {
+            event?.preventDefault();
+            submitQuestion();
+          }}
         />
         <Button type='primary' onClick={submitQuestion}>
           Send
