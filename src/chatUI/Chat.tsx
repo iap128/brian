@@ -4,9 +4,12 @@ import ChatBubble, { ChatProps } from './ChatBubble';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import LoadingAnswer from './LoadingAnswer';
 import { apiKey } from '../config';
+import { marked } from 'marked';
 
 const Chat = () => {
-  const [messages, setMessages] = useState<ChatProps[]>([]);
+  const [messages, setMessages] = useState<ChatProps[]>([
+    { message: "Hi, I'm Brian. What can I help you with today?", messageType: 'answer' },
+  ]);
   const [loading, setLoading] = useState(false);
 
   const [field, setField] = useState('');
@@ -35,10 +38,11 @@ const Chat = () => {
     //get the answer
     const result = await model.generateContent(question.message);
     const response = await result.response;
+    const markedAnswer = await marked(response.text());
 
     //save the answer
     const answer: ChatProps = {
-      message: response.text(),
+      message: markedAnswer,
       messageType: 'answer',
     };
 
@@ -53,7 +57,7 @@ const Chat = () => {
     <div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {messages.map(message => (
-          <ChatBubble {...message} />
+          <ChatBubble key={message.message} {...message} />
         ))}
       </div>
 
@@ -62,8 +66,9 @@ const Chat = () => {
       <Divider />
 
       <Space.Compact block>
-        <Input
-          placeholder='What can Brian help you with today?'
+        <Input.TextArea
+          autoSize
+          placeholder='Enter your question'
           value={field}
           onChange={e => setField(e.target.value)}
           onPressEnter={submitQuestion}
@@ -77,9 +82,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-/*
-Notes for formatting text from Gemini
-
-**Using the `marked` library:** ```javascript import { marked } from 'marked'; const formattedResponse = marked(rawResponseText); ``` **Using the `markdown-it` library:** ```javascript import MarkdownIt from 'markdown-it'; const md = new MarkdownIt(); const formattedResponse = md.render(rawResponseText); ``` **Using the `html-react-parser` library:** ```javascript import { htmlToReact } from 'html-react-parser'; const formattedResponse = htmlToReact(rawResponseText); ``` **Converting Markdown to HTML:** ```javascript const formattedResponse = rawResponseText.replace(/\\n/g, '<br>'); ``` **Example Usage:** ```javascript import { useState, useEffect } from 'react'; import { marked } from 'marked'; const GeminiResponseFormatter = () => { const [rawResponseText, setRawResponseText] = useState(''); useEffect(() => { // Fetch raw response text from API fetch('/api/gemini/response') .then(res => res.text()) .then(text => setRawResponseText(text)) .catch(error => console.error(error)); }, []); const formattedResponse = marked(rawResponseText); return ( <div> <h1>Gemini Response</h1> <div dangerouslySetInnerHTML={{ __html: formattedResponse }} /> </div> ); }; export default GeminiResponseFormatter; ```
-*/
