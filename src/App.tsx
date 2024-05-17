@@ -1,6 +1,7 @@
 import { Layout, Button, Typography, theme } from 'antd';
 import Chat from './chatUI/Chat';
 import './App.css';
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 
@@ -19,13 +20,23 @@ function App() {
           justifyContent: 'space-between',
           height: 'auto',
           padding: '0px 5%',
+          borderRadius: 10,
         }}
       >
         <Typography.Title>Ask Brian</Typography.Title>
+        <Button
+          icon={<PlusOutlined />}
+          type='dashed'
+          onClick={() => window.location.reload()}
+          style={{ background: '#2159c2' }}
+        />
       </Header>
 
-      <Content style={{ padding: '10px 30px' }}>
-        <div className='site-layout-content' style={{ background: colorBgContainer }}>
+      <Content style={{ padding: '10px 5%' }}>
+        <div
+          className='site-layout-content'
+          style={{ background: colorBgContainer, borderRadius: 10 }}
+        >
           <Chat />
         </div>
       </Content>
