@@ -72,6 +72,7 @@ const Chat = () => {
 
       <Space.Compact block>
         <Input.TextArea
+          variant='filled'
           autoSize
           placeholder='Enter your question'
           value={field}
