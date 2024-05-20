@@ -7,12 +7,12 @@ const LoadingAnswer = () => {
         padding: '5px 10px',
         borderRadius: '10px',
         marginBottom: '5px',
-        backgroundColor: '#3b3b3d',
+        backgroundColor: '#e9e9eb',
         alignSelf: 'flex-start',
         width: 'fit-content',
       }}
     >
-      <PulseLoader color='white' speedMultiplier={0.75} size={10} />
+      <PulseLoader speedMultiplier={0.75} size={10} />
     </div>
   );
 };

@@ -23,7 +23,7 @@ const ChatBubble: FC<Content> = ({ parts, role }) => {
           padding: '5px 10px',
           borderRadius: '10px',
           marginBottom: '5px',
-          backgroundColor: role === 'user' ? '#3478f6' : '#3b3b3d',
+          backgroundColor: role === 'user' ? '#3478f6' : '#e9e9eb',
         }}
       >
         <Typography.Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider } from 'antd';
 import './index.css';
 import '@fontsource/ubuntu';
 
@@ -11,16 +11,10 @@ root.render(
   <React.StrictMode>
     <ConfigProvider
       theme={{
-        algorithm: theme.darkAlgorithm,
         token: {
           fontFamily: 'Ubuntu, sans-serif',
           fontSize: 16,
           borderRadius: 10,
-        },
-        components: {
-          Layout: {
-            headerBg: '#3478f6',
-          },
         },
       }}
     >
