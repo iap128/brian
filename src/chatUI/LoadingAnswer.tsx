@@ -7,7 +7,7 @@ const LoadingAnswer = () => {
         padding: '5px 10px',
         borderRadius: '10px',
         marginBottom: '5px',
-        backgroundColor: '#3b3b3d',
+        backgroundColor: '#e9e9eb',
         alignSelf: 'flex-start',
         width: 'fit-content',
       }}
