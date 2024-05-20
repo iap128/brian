@@ -12,7 +12,7 @@ root.render(
     <ConfigProvider
       theme={{
         token: {
-          fontFamily: 'Ubuntu, sans-serif;',
+          fontFamily: 'Ubuntu, sans-serif',
           fontSize: 16,
           borderRadius: 10,
         },
