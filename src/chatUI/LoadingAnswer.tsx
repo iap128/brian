@@ -12,7 +12,7 @@ const LoadingAnswer = () => {
         width: 'fit-content',
       }}
     >
-      <PulseLoader color='white' speedMultiplier={0.75} size={10} />
+      <PulseLoader speedMultiplier={0.75} size={10} />
     </div>
   );
 };
