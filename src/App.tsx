@@ -1,15 +1,11 @@
 import { Layout, Button, Typography } from 'antd';
 import Chat from './chatUI/Chat';
 import './App.css';
-import { MutedOutlined, PlusOutlined, SoundOutlined } from '@ant-design/icons';
-import { useContext } from 'react';
-import { AppContext } from './AppContext';
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
-  const { sound, setSound } = useContext(AppContext);
-
   return (
     <Layout className="layout" style={{ backgroundColor: 'transparent' }}>
       <Header
@@ -30,10 +26,6 @@ function App() {
         <Button icon={<PlusOutlined />} type="dashed" onClick={() => window.location.reload()}>
           New Chat
         </Button>
-        <Button
-          icon={sound ? <SoundOutlined /> : <MutedOutlined />}
-          onClick={() => setSound(!sound)}
-        />
       </Header>
 
       <Content style={{ padding: '10px 5%' }}>
