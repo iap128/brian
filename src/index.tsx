@@ -13,7 +13,7 @@ root.render(
       theme={{
         algorithm: theme.darkAlgorithm,
         token: {
-          fontFamily: 'Ubuntu, sans-serif;',
+          fontFamily: 'Ubuntu, sans-serif',
           fontSize: 16,
           borderRadius: 10,
         },
