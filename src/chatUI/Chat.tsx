@@ -59,7 +59,7 @@ const Chat = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {messages.map(message => (
           <ChatBubble key={message.parts[0].text} {...message} />
@@ -68,23 +68,25 @@ const Chat = () => {
 
       {loading && <LoadingAnswer />}
 
-      <Divider />
+      <div style={{ position: 'sticky', bottom: 0, marginTop: 'auto' }}>
+        <Divider />
 
-      <Space.Compact block>
-        <Input.TextArea
-          autoSize
-          placeholder='Enter your question'
-          value={field}
-          onChange={e => setField(e.target.value)}
-          onPressEnter={event => {
-            event?.preventDefault();
-            submitQuestion();
-          }}
-        />
-        <Button type='primary' onClick={submitQuestion}>
-          Send
-        </Button>
-      </Space.Compact>
+        <Space.Compact block>
+          <Input.TextArea
+            autoSize
+            placeholder="Enter your question"
+            value={field}
+            onChange={e => setField(e.target.value)}
+            onPressEnter={event => {
+              event?.preventDefault();
+              submitQuestion();
+            }}
+          />
+          <Button type="primary" onClick={submitQuestion}>
+            Send
+          </Button>
+        </Space.Compact>
+      </div>
     </div>
   );
 };
