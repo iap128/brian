@@ -50,11 +50,20 @@ const Chat = () => {
 
     //add the question to the screen
     setMessages([...messages, question]);
+ 
+    let markedAnswer = '';
 
-    //get the answer
-    const result = await chat.sendMessage(question.parts);
-    const response = await result.response;
-    const markedAnswer = await marked(response.text());
+    try {
+      //get the answer
+      const result = await chat.sendMessage(question.parts);
+      const response = await result.response;
+      markedAnswer = await marked(response.text());
+    } catch (error) {
+      markedAnswer = "Sorry, Brian can't answer questions about that.";
+
+      //remove the last question since it's invalid in the conversation
+      chatHistory.pop();
+    }
 
     //save the answer
     const answer: Content = {
@@ -87,6 +96,7 @@ const Chat = () => {
 
         <Space.Compact block>
           <Input.TextArea
+            autoFocus
             autoSize
             placeholder="Enter your question"
             value={field}
