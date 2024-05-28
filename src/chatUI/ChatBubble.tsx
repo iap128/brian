@@ -2,15 +2,20 @@ import { RobotOutlined, UserOutlined } from '@ant-design/icons';
 import { Content } from '@google/generative-ai';
 import { Avatar, Typography } from 'antd';
 import { FC } from 'react';
+import { animated, useSpring } from '@react-spring/web';
+import { bottomToTop } from '../utils/animations';
 
 const ChatBubble: FC<Content> = ({ parts, role }) => {
+  const spring = useSpring(bottomToTop);
+
   return (
-    <div
+    <animated.div
       style={{
         display: 'flex',
         gap: '15px',
         flexDirection: role === 'user' ? 'row-reverse' : 'row',
         margin: '10px 0px',
+        ...spring
       }}
     >
       <Avatar
@@ -34,7 +39,7 @@ const ChatBubble: FC<Content> = ({ parts, role }) => {
           )}
         </Typography.Text>
       </div>
-    </div>
+    </animated.div>
   );
 };
 
