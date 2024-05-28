@@ -36,7 +36,7 @@ function App() {
             background: 'rgba(255, 255, 255, 0.2)',
             backdropFilter: 'blur(5px)',
             boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
-            height: '80vh',
+            height: '75vh',
           }}
         >
           <Chat />
