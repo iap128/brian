@@ -5,6 +5,7 @@ import { Content, GoogleGenerativeAI } from '@google/generative-ai';
 import LoadingAnswer from './LoadingAnswer';
 import { apiKey } from '../config';
 import { marked } from 'marked';
+import { ArrowUpOutlined } from '@ant-design/icons';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Content[]>([
@@ -96,7 +97,7 @@ const Chat = () => {
               submitQuestion();
             }}
           />
-          <Button type="primary" onClick={submitQuestion}>
+          <Button disabled={!field} icon={<ArrowUpOutlined />} type="primary" onClick={submitQuestion}>
             Send
           </Button>
         </Space.Compact>
