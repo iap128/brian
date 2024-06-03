@@ -1,5 +1,5 @@
 import { Button, Divider, Input, Space } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import ChatBubble from './ChatBubble';
 import { Content, GoogleGenerativeAI } from '@google/generative-ai';
 import LoadingAnswer from './LoadingAnswer';
@@ -7,8 +7,6 @@ import { apiKey } from '../config';
 import { marked } from 'marked';
 
 const Chat = () => {
-  const divRef = useRef<HTMLDivElement>(null);
-
   const [messages, setMessages] = useState<Content[]>([
     { parts: [{ text: "Hi, I'm Brian. What can I help you with today?" }], role: 'model' },
   ]);
@@ -21,13 +19,6 @@ const Chat = () => {
   //a variable called `apiKey` that contains your own key
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-
-  //auto scroll to bottom when new message is added
-  useEffect(() => {
-    if (divRef.current !== null) {
-      divRef.current.scrollTop = divRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   const submitQuestion = async () => {
     if (!field) return;
@@ -80,7 +71,6 @@ const Chat = () => {
 
   return (
     <div
-      ref={divRef}
       style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'scroll' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
