@@ -1,5 +1,5 @@
 import { Button, Divider, Input, Space } from 'antd';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ChatBubble from './ChatBubble';
 import { Content, GoogleGenerativeAI } from '@google/generative-ai';
 import LoadingAnswer from './LoadingAnswer';
@@ -8,6 +8,8 @@ import { marked } from 'marked';
 import { ArrowUpOutlined } from '@ant-design/icons';
 
 const Chat = () => {
+  const divRef = useRef<HTMLDivElement>(null);
+
   const [messages, setMessages] = useState<Content[]>([
     { parts: [{ text: "Hi, I'm Brian. What can I help you with today?" }], role: 'model' },
   ]);
@@ -20,6 +22,12 @@ const Chat = () => {
   //a variable called `apiKey` that contains your own key
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+
+  const scrollToBottom = () => {
+    if (divRef.current !== null) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
+  };
 
   const submitQuestion = async () => {
     if (!field) return;
@@ -42,8 +50,11 @@ const Chat = () => {
 
     //add the question to the screen
     setMessages([...messages, question]);
- 
+
     let markedAnswer = '';
+
+    //scroll to the message
+    scrollToBottom();
 
     try {
       //get the answer
@@ -72,6 +83,7 @@ const Chat = () => {
 
   return (
     <div
+      ref={divRef}
       style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'scroll' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -82,14 +94,22 @@ const Chat = () => {
 
       {loading && <LoadingAnswer />}
 
-      <div style={{ position: 'sticky', bottom: 0, marginTop: 'auto' }}>
-        <Divider />
-
+      <div
+        style={{
+          position: 'sticky',
+          bottom: 0,
+          marginTop: 'auto',
+          background: 'rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(5px)',
+          padding: '10px',
+          borderRadius: 10,
+        }}
+      >
         <Space.Compact block>
           <Input.TextArea
             autoFocus
             autoSize
-            placeholder="Enter your question"
+            placeholder='Enter your question'
             value={field}
             onChange={e => setField(e.target.value)}
             onPressEnter={event => {
@@ -97,7 +117,12 @@ const Chat = () => {
               submitQuestion();
             }}
           />
-          <Button disabled={!field} icon={<ArrowUpOutlined />} type="primary" onClick={submitQuestion}>
+          <Button
+            disabled={!field}
+            icon={<ArrowUpOutlined />}
+            type='primary'
+            onClick={submitQuestion}
+          >
             Send
           </Button>
         </Space.Compact>

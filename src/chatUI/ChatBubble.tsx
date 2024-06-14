@@ -15,11 +15,11 @@ const ChatBubble: FC<Content> = ({ parts, role }) => {
         gap: '15px',
         flexDirection: role === 'user' ? 'row-reverse' : 'row',
         margin: '10px 0px',
-        ...spring
+        ...spring,
       }}
     >
       <Avatar
-        icon={role === 'user' ? <UserOutlined /> : <RobotOutlined />}
+        icon={role === 'user' ? <UserOutlined /> : <img src='./robot.png' alt='robot' />}
         style={{ flexShrink: 0 }}
       />
 
