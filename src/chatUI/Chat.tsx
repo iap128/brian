@@ -1,11 +1,10 @@
-import { Button, Divider, Input, Space } from 'antd';
 import { useRef, useState } from 'react';
-import ChatBubble from './ChatBubble';
 import { Content, GoogleGenerativeAI } from '@google/generative-ai';
-import LoadingAnswer from './LoadingAnswer';
 import { apiKey } from '../config';
 import { marked } from 'marked';
-import { ArrowUpOutlined } from '@ant-design/icons';
+import ChatField from './ChatField';
+import ChatMessages from './ChatMessages';
+import { scrollToBottom } from '../utils/helpers';
 
 const Chat = () => {
   const divRef = useRef<HTMLDivElement>(null);
@@ -22,12 +21,6 @@ const Chat = () => {
   //a variable called `apiKey` that contains your own key
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-
-  const scrollToBottom = () => {
-    if (divRef.current !== null) {
-      divRef.current.scrollTop = divRef.current.scrollHeight;
-    }
-  };
 
   const submitQuestion = async () => {
     if (!field) return;
@@ -51,10 +44,10 @@ const Chat = () => {
     //add the question to the screen
     setMessages([...messages, question]);
 
-    let markedAnswer = '';
+    //scroll to the bottom
+    scrollToBottom(divRef);
 
-    //scroll to the message
-    scrollToBottom();
+    let markedAnswer = '';
 
     try {
       //get the answer
@@ -82,51 +75,14 @@ const Chat = () => {
   };
 
   return (
-    <div
-      ref={divRef}
-      style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'scroll' }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {messages.map(message => (
-          <ChatBubble key={message.parts[0].text} {...message} />
-        ))}
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <ChatMessages divRef={divRef} messages={messages} loading={loading} />
 
-      {loading && <LoadingAnswer />}
-
-      <div
-        style={{
-          position: 'sticky',
-          bottom: 0,
-          marginTop: 'auto',
-          background: 'rgba(255, 255, 255, 0.2)',
-          backdropFilter: 'blur(5px)',
-          padding: '10px',
-          borderRadius: 10,
-        }}
-      >
-        <Space.Compact block>
-          <Input.TextArea
-            autoFocus
-            autoSize
-            placeholder='Enter your question'
-            value={field}
-            onChange={e => setField(e.target.value)}
-            onPressEnter={event => {
-              event?.preventDefault();
-              submitQuestion();
-            }}
-          />
-          <Button
-            disabled={!field}
-            icon={<ArrowUpOutlined />}
-            type='primary'
-            onClick={submitQuestion}
-          >
-            Send
-          </Button>
-        </Space.Compact>
-      </div>
+      <ChatField
+        field={field}
+        setField={setField}
+        submitQuestion={submitQuestion}
+      />
     </div>
   );
 };

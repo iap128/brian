@@ -1,4 +1,4 @@
-import { RobotOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { Content } from '@google/generative-ai';
 import { Avatar, Typography } from 'antd';
 import { FC } from 'react';
