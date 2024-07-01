@@ -1,12 +1,11 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 import ChatField from './ChatField';
 import ChatMessages from './ChatMessages';
 import { Divider } from 'antd';
 import { ChatContext } from '../ChatContext';
 
 const Chat = () => {
-  const divRef = useRef<HTMLDivElement>(null);
-  const { submitQuestion } = useContext(ChatContext);
+  const { submitQuestion, divRef } = useContext(ChatContext);
 
   const [field, setField] = useState('');
 

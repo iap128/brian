@@ -1,7 +1,8 @@
 import { Content, GoogleGenerativeAI } from '@google/generative-ai';
-import { FC, createContext, useState } from 'react';
+import { FC, createContext, useRef, useState } from 'react';
 import { apiKey } from './config';
 import { marked } from 'marked';
+import { scrollToBottom } from './utils/helpers';
 
 interface ChatContextInterface {
   messages: Content[];
@@ -12,6 +13,7 @@ interface ChatContextInterface {
   error: boolean;
   setError: (error: boolean) => void;
   submitQuestion: (field: string) => void;
+  divRef: React.RefObject<HTMLDivElement>;
 }
 
 interface Props {
@@ -27,6 +29,7 @@ const ChatProvider: FC<Props> = ({ children }) => {
   const [chatHistory] = useState<Content[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
 
     //create a file called `config.ts` in /src and export
   //a variable called `apiKey` that contains your own key
@@ -56,7 +59,7 @@ const ChatProvider: FC<Props> = ({ children }) => {
     setMessages([...messages, question]);
 
     //scroll to the bottom
-    //scrollToBottom(divRef);
+    scrollToBottom(divRef);
 
     let markedAnswer = '';
 
@@ -88,7 +91,7 @@ const ChatProvider: FC<Props> = ({ children }) => {
 
   return (
     <ChatContext.Provider
-      value={{ messages, setMessages, chatHistory, loading, setLoading, error, setError, submitQuestion }}
+      value={{ messages, setMessages, chatHistory, loading, setLoading, error, setError, submitQuestion, divRef }}
     >
       {children}
     </ChatContext.Provider>
