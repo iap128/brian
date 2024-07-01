@@ -5,6 +5,7 @@ import { marked } from 'marked';
 import ChatField from './ChatField';
 import ChatMessages from './ChatMessages';
 import { scrollToBottom } from '../utils/helpers';
+import { Divider } from 'antd';
 
 const Chat = () => {
   const divRef = useRef<HTMLDivElement>(null);
@@ -77,6 +78,8 @@ const Chat = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <ChatMessages divRef={divRef} messages={messages} loading={loading} />
+
+      <Divider />
 
       <ChatField
         field={field}
