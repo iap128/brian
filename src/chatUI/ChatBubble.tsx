@@ -6,8 +6,13 @@ import { animated, useSpring } from '@react-spring/web';
 import { bottomToTop } from '../utils/animations';
 import { ChatContext } from '../ChatContext';
 
-const ChatBubble: FC<Content> = ({ parts, role }) => {
-  const { error, submitQuestion, messages } = useContext(ChatContext);
+interface Props {
+  message: Content;
+  error: boolean;
+}
+
+const ChatBubble: FC<Props> = ({ message: {role, parts}, error }) => {
+  const { submitQuestion } = useContext(ChatContext);
 
   const spring = useSpring(bottomToTop);
 
@@ -42,7 +47,7 @@ const ChatBubble: FC<Content> = ({ parts, role }) => {
           )}
         </Typography.Text>
       </div>
-      {error && JSON.stringify({parts, role}) === JSON.stringify(messages[messages.length - 2]) && (
+      {error && (
         <Popconfirm 
           title="Unable to Get Answer"
           description="You can try sending the question again."
