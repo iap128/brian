@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { ConfigProvider } from 'antd';
 import './index.css';
 import '@fontsource/ubuntu';
+import ChatProvider from './ChatContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -18,7 +19,9 @@ root.render(
         },
       }}
     >
-      <App />
+      <ChatProvider>
+        <App />
+      </ChatProvider>
     </ConfigProvider>
   </React.StrictMode>,
 );

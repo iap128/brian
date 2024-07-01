@@ -1,11 +1,14 @@
-import { UserOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { Content } from '@google/generative-ai';
-import { Avatar, Typography } from 'antd';
-import { FC } from 'react';
+import { Avatar, Popconfirm, Typography } from 'antd';
+import { FC, useContext } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { bottomToTop } from '../utils/animations';
+import { ChatContext } from '../ChatContext';
 
 const ChatBubble: FC<Content> = ({ parts, role }) => {
+  const { error, submitQuestion, messages } = useContext(ChatContext);
+
   const spring = useSpring(bottomToTop);
 
   return (
@@ -19,7 +22,7 @@ const ChatBubble: FC<Content> = ({ parts, role }) => {
       }}
     >
       <Avatar
-        icon={role === 'user' ? <UserOutlined /> : <img src='./robot.png' alt='robot' />}
+        icon={role === 'user' ? <UserOutlined /> : <img src="./robot.png" alt="robot" />}
         style={{ flexShrink: 0 }}
       />
 
@@ -39,6 +42,17 @@ const ChatBubble: FC<Content> = ({ parts, role }) => {
           )}
         </Typography.Text>
       </div>
+      {error && JSON.stringify({parts, role}) === JSON.stringify(messages[messages.length - 2]) && (
+        <Popconfirm 
+          title="Unable to Get Answer"
+          description="You can try sending the question again."
+          okText="Resend"
+          onConfirm={() => submitQuestion(parts[0].text as string)}
+          icon={<ExclamationCircleOutlined style={ { color: 'red' }}/>}
+        >
+          <ExclamationCircleOutlined style={ { color: 'red' }}/>
+        </Popconfirm>
+      )}
     </animated.div>
   );
 };
