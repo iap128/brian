@@ -9,7 +9,6 @@ interface Props {
 }
 
 const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
-
   return (
     <div
       style={{
@@ -24,9 +23,8 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
     >
       <Space.Compact block>
         <Input.TextArea
-          autoFocus
           autoSize
-          placeholder="Enter your question"
+          placeholder='Enter your question'
           value={field}
           onChange={e => setField(e.target.value)}
           onPressEnter={event => {
@@ -37,7 +35,7 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
         <Button
           disabled={!field}
           icon={<ArrowUpOutlined />}
-          type="primary"
+          type='primary'
           onClick={submitQuestion}
         >
           Send
