@@ -18,7 +18,7 @@ function App() {
           padding: '0px 5%',
           borderRadius: 10,
           background: 'white',
-          boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
+          boxShadow: '0 8px 32px 0 lightgray',
         }}
       >
         <Typography.Title>Ask Brian</Typography.Title>
@@ -33,7 +33,7 @@ function App() {
           style={{
             borderRadius: 10,
             background: 'white',
-            boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
+            boxShadow: '0 8px 32px 0 lightgray',
             height: '75vh',
           }}
         >
@@ -45,7 +45,7 @@ function App() {
         style={{
           textAlign: 'center',
           background: 'white',
-          boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
+          boxShadow: '0 8px 32px 0 lightgray',
         }}
       >
         Made with ❤️ by{' '}
