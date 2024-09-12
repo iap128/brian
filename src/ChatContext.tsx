@@ -1,5 +1,5 @@
 import { Content, GoogleGenerativeAI } from '@google/generative-ai';
-import { FC, createContext, useRef, useState } from 'react';
+import { FC, createContext, useEffect, useRef, useState } from 'react';
 import { apiKey } from './config';
 import { marked } from 'marked';
 import { scrollToBottom } from './utils/helpers';
@@ -36,6 +36,11 @@ const ChatProvider: FC<Props> = ({ children }) => {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
+  useEffect(() => {
+    console.log('scrolling to bottom');
+    scrollToBottom(divRef);
+  }, [messages]);
+
   const submitQuestion = async (field: string) => {
     if (!field) return;
 
@@ -57,9 +62,6 @@ const ChatProvider: FC<Props> = ({ children }) => {
 
     //add the question to the screen
     setMessages([...messages, question]);
-
-    //scroll to the bottom
-    scrollToBottom(divRef);
 
     let markedAnswer = '';
 
