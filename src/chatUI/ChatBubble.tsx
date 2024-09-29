@@ -11,7 +11,7 @@ interface Props {
   error: boolean;
 }
 
-const ChatBubble: FC<Props> = ({ message: {role, parts}, error }) => {
+const ChatBubble: FC<Props> = ({ message: { role, parts }, error }) => {
   const { submitQuestion } = useContext(ChatContext);
 
   const spring = useSpring(bottomToTop);
@@ -27,7 +27,7 @@ const ChatBubble: FC<Props> = ({ message: {role, parts}, error }) => {
       }}
     >
       <Avatar
-        icon={role === 'user' ? <UserOutlined /> : <img src="./robot.png" alt="robot" />}
+        icon={role === 'user' ? <UserOutlined /> : <img src='./robot.png' alt='robot' />}
         style={{ flexShrink: 0 }}
       />
 
@@ -39,7 +39,7 @@ const ChatBubble: FC<Props> = ({ message: {role, parts}, error }) => {
           backgroundColor: role === 'user' ? '#3478f6' : '#e9e9eb',
         }}
       >
-        <Typography.Text>
+        <Typography.Text style={{ color: role === 'user' ? 'white' : 'black' }}>
           {role === 'user' ? (
             parts[0].text
           ) : (
@@ -48,14 +48,14 @@ const ChatBubble: FC<Props> = ({ message: {role, parts}, error }) => {
         </Typography.Text>
       </div>
       {error && (
-        <Popconfirm 
-          title="Unable to Get Answer"
-          description="You can try sending the question again."
-          okText="Resend"
+        <Popconfirm
+          title='Unable to Get Answer'
+          description='You can try sending the question again.'
+          okText='Resend'
           onConfirm={() => submitQuestion(parts[0].text as string)}
-          icon={<ExclamationCircleOutlined style={ { color: 'red' }}/>}
+          icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
         >
-          <ExclamationCircleOutlined style={ { color: 'red' }}/>
+          <ExclamationCircleOutlined style={{ color: 'red' }} />
         </Popconfirm>
       )}
     </animated.div>
