@@ -31,13 +31,12 @@ const ChatProvider: FC<Props> = ({ children }) => {
   const [error, setError] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
-    //create a file called `config.ts` in /src and export
+  //create a file called `config.ts` in /src and export
   //a variable called `apiKey` that contains your own key
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   useEffect(() => {
-    console.log('scrolling to bottom');
     scrollToBottom(divRef);
   }, [messages]);
 
@@ -93,7 +92,17 @@ const ChatProvider: FC<Props> = ({ children }) => {
 
   return (
     <ChatContext.Provider
-      value={{ messages, setMessages, chatHistory, loading, setLoading, error, setError, submitQuestion, divRef }}
+      value={{
+        messages,
+        setMessages,
+        chatHistory,
+        loading,
+        setLoading,
+        error,
+        setError,
+        submitQuestion,
+        divRef,
+      }}
     >
       {children}
     </ChatContext.Provider>
