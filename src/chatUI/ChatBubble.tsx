@@ -1,6 +1,6 @@
-import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { CopyOutlined, ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { Content } from '@google/generative-ai';
-import { Avatar, Popconfirm, Typography } from 'antd';
+import { Avatar, Button, Popconfirm, Typography } from 'antd';
 import { FC, useContext } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { bottomToTop } from '../utils/animations';
@@ -16,47 +16,70 @@ const ChatBubble: FC<Props> = ({ message: { role, parts }, error }) => {
 
   const spring = useSpring(bottomToTop);
 
+  const stripHtmlTags = (html: string): string => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || '';
+  };
+
   return (
     <animated.div
       style={{
         display: 'flex',
-        gap: '15px',
         flexDirection: role === 'user' ? 'row-reverse' : 'row',
-        margin: '10px 0px',
+        alignItems: 'center',
+        gap: '10px',
         ...spring,
       }}
     >
-      <Avatar
-        icon={role === 'user' ? <UserOutlined /> : <img src='./robot.png' alt='robot' />}
-        style={{ flexShrink: 0 }}
-      />
-
       <div
         style={{
-          padding: '5px 10px',
-          borderRadius: '10px',
-          marginBottom: '5px',
-          backgroundColor: role === 'user' ? '#3478f6' : '#e9e9eb',
+          display: 'flex',
+          gap: '15px',
+          flexDirection: role === 'user' ? 'row-reverse' : 'row',
+          margin: '10px 0px',
         }}
       >
-        <Typography.Text style={{ color: role === 'user' ? 'white' : 'black' }}>
-          {role === 'user' ? (
-            parts[0].text
-          ) : (
-            <div dangerouslySetInnerHTML={{ __html: parts[0].text as string }} />
-          )}
-        </Typography.Text>
-      </div>
-      {error && (
-        <Popconfirm
-          title='Unable to Get Answer'
-          description='You can try sending the question again.'
-          okText='Resend'
-          onConfirm={() => submitQuestion(parts[0].text as string)}
-          icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
+        <Avatar
+          icon={role === 'user' ? <UserOutlined /> : <img src="./robot.png" alt="robot" />}
+          style={{ flexShrink: 0 }}
+        />
+
+        <div
+          style={{
+            padding: '5px 10px',
+            borderRadius: '10px',
+            marginBottom: '5px',
+            backgroundColor: role === 'user' ? '#3478f6' : '#e9e9eb',
+          }}
         >
-          <ExclamationCircleOutlined style={{ color: 'red' }} />
-        </Popconfirm>
+          <Typography.Text style={{ color: role === 'user' ? 'white' : 'black' }}>
+            {role === 'user' ? (
+              parts[0].text
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: parts[0].text as string }} />
+            )}
+          </Typography.Text>
+        </div>
+        {error && (
+          <Popconfirm
+            title="Unable to Get Answer"
+            description="You can try sending the question again."
+            okText="Resend"
+            onConfirm={() => submitQuestion(parts[0].text as string)}
+            icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
+          >
+            <ExclamationCircleOutlined style={{ color: 'red' }} />
+          </Popconfirm>
+        )}
+      </div>
+
+      {role === 'model' && (
+        <Button
+          shape='circle'
+          icon={<CopyOutlined />}
+          onClick={() => navigator.clipboard.writeText(stripHtmlTags(parts[0].text as string))}
+        />
       )}
     </animated.div>
   );
