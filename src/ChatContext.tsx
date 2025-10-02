@@ -23,9 +23,7 @@ interface Props {
 export const ChatContext = createContext({} as ChatContextInterface);
 
 const ChatProvider: FC<Props> = ({ children }) => {
-  const [messages, setMessages] = useState<Content[]>([
-    { parts: [{ text: "Hi, I'm Brian. What can I help you with today?" }], role: 'model' },
-  ]);
+  const [messages, setMessages] = useState<Content[]>([]);
   const [chatHistory] = useState<Content[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);

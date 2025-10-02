@@ -1,6 +1,7 @@
-import { ArrowUpOutlined } from '@ant-design/icons';
-import { Space, Button, Input } from 'antd';
-import { FC } from 'react';
+import { ArrowRightOutlined, PaperClipOutlined } from '@ant-design/icons';
+import { Button, Input, Flex, Upload } from 'antd';
+import { FC, useContext } from 'react';
+import { ChatContext } from '../ChatContext';
 
 interface Props {
   field: string;
@@ -9,39 +10,49 @@ interface Props {
 }
 
 const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
+  const { messages } = useContext(ChatContext);
+
+  const hasMessages = messages.length > 0;
+  
   return (
-    <div
+    <Flex
+      vertical
+      gap={15}
       style={{
-        position: 'sticky',
-        bottom: 0,
-        marginTop: 'auto',
-        background: 'rgba(255, 255, 255, 0.2)',
-        backdropFilter: 'blur(5px)',
-        padding: '10px',
-        borderRadius: 10,
+        position: hasMessages ? 'sticky' : 'static',
+        bottom: 10,
+        backgroundColor: 'white',
+        padding: '20px',
+        borderRadius: 20,
+        width: '65%',
+        boxShadow: '0 8px 32px 0 lightgray',
+        marginBottom: '20px'
       }}
     >
-      <Space.Compact block>
-        <Input.TextArea
-          autoSize
-          placeholder='Enter your question'
-          value={field}
-          onChange={e => setField(e.target.value)}
-          onPressEnter={event => {
-            event?.preventDefault();
-            submitQuestion();
-          }}
-        />
+      <Input.TextArea
+        autoSize
+        placeholder="Enter your question"
+        value={field}
+        onChange={e => setField(e.target.value)}
+        onPressEnter={event => {
+          event?.preventDefault();
+          submitQuestion();
+        }}
+      />
+
+      <Flex justify='space-between'>
+        <Upload>
+          <Button icon={<PaperClipOutlined />}/>
+        </Upload>
+
         <Button
           disabled={!field}
-          icon={<ArrowUpOutlined />}
-          type='primary'
+          icon={<ArrowRightOutlined />}
+          type="primary"
           onClick={submitQuestion}
-        >
-          Send
-        </Button>
-      </Space.Compact>
-    </div>
+        />
+      </Flex>
+    </Flex>
   );
 };
 
