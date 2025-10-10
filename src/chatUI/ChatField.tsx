@@ -13,7 +13,7 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
   const { messages } = useContext(ChatContext);
 
   const hasMessages = messages.length > 0;
-  
+
   return (
     <Flex
       vertical
@@ -26,12 +26,12 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
         borderRadius: 20,
         width: '65%',
         boxShadow: '0 8px 32px 0 lightgray',
-        marginBottom: '20px'
+        marginBottom: '20px',
       }}
     >
       <Input.TextArea
         autoSize
-        placeholder="Enter your question"
+        placeholder='Enter your question'
         value={field}
         onChange={e => setField(e.target.value)}
         onPressEnter={event => {
@@ -41,14 +41,14 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
       />
 
       <Flex justify='space-between'>
-        <Upload>
+        {/* <Upload>
           <Button icon={<PaperClipOutlined />}/>
-        </Upload>
+        </Upload> */}
 
         <Button
           disabled={!field}
           icon={<ArrowRightOutlined />}
-          type="primary"
+          type='primary'
           onClick={submitQuestion}
         />
       </Flex>
