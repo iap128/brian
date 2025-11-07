@@ -7,7 +7,7 @@ const { Header, Content } = Layout;
 
 function App() {
   return (
-    <Layout className="layout" style={{ backgroundColor: 'transparent' }}>
+    <Layout className='layout' style={{ backgroundColor: 'transparent' }}>
       <Header
         style={{
           display: 'flex',
@@ -23,13 +23,13 @@ function App() {
       >
         <Typography.Title level={3}>Ask Brian</Typography.Title>
 
-        <Button icon={<PlusOutlined />} type="dashed" onClick={() => window.location.reload()}>
+        <Button icon={<PlusOutlined />} type='dashed' onClick={() => window.location.reload()}>
           New Chat
         </Button>
       </Header>
 
-      <Content style={{ padding: '10px 5%' }}>
-        <div className="site-layout-content">
+      <Content style={{ padding: '10px 0' }}>
+        <div className='site-layout-content'>
           <Chat />
         </div>
       </Content>

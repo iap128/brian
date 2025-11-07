@@ -1,7 +1,8 @@
 import { ArrowRightOutlined, PaperClipOutlined } from '@ant-design/icons';
-import { Button, Input, Flex, Upload } from 'antd';
-import { FC, useContext } from 'react';
+import { Button, Input, Flex, Upload, Checkbox } from 'antd';
+import { FC, useContext, useState } from 'react';
 import { ChatContext } from '../ChatContext';
+import { getScreenWidth } from '../utils/helpers';
 
 interface Props {
   field: string;
@@ -11,6 +12,8 @@ interface Props {
 
 const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
   const { messages } = useContext(ChatContext);
+
+  const [multiLine, setMultiLine] = useState(false);
 
   const hasMessages = messages.length > 0;
 
@@ -24,7 +27,7 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
         backgroundColor: 'white',
         padding: '20px',
         borderRadius: 20,
-        width: '65%',
+        width: getScreenWidth() < 768 ? '100%' : '65%',
         boxShadow: '0 8px 32px 0 lightgray',
         marginBottom: '20px',
       }}
@@ -35,15 +38,21 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
         value={field}
         onChange={e => setField(e.target.value)}
         onPressEnter={event => {
-          event?.preventDefault();
-          submitQuestion();
+          if (!multiLine) {
+            event?.preventDefault();
+            submitQuestion();
+          }
         }}
       />
 
-      <Flex justify='space-between'>
+      <Flex justify='space-between' align='center'>
         {/* <Upload>
           <Button icon={<PaperClipOutlined />}/>
         </Upload> */}
+
+        <Checkbox checked={multiLine} onChange={e => setMultiLine(e.target.checked)}>
+          Press enter for new line
+        </Checkbox>
 
         <Button
           disabled={!field}
