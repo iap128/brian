@@ -1,5 +1,5 @@
-import { ArrowRightOutlined, PaperClipOutlined } from '@ant-design/icons';
-import { Button, Input, Flex, Upload, Checkbox } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Button, Input, Flex, Checkbox } from 'antd';
 import { FC, useContext, useState } from 'react';
 import { ChatContext } from '../ChatContext';
 import { getScreenWidth } from '../utils/helpers';
@@ -46,10 +46,6 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
       />
 
       <Flex justify='space-between' align='center'>
-        {/* <Upload>
-          <Button icon={<PaperClipOutlined />}/>
-        </Upload> */}
-
         <Checkbox checked={multiLine} onChange={e => setMultiLine(e.target.checked)}>
           Press enter for new line
         </Checkbox>

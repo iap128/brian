@@ -14,6 +14,8 @@ interface ChatContextInterface {
   setError: (error: boolean) => void;
   submitQuestion: (field: string) => void;
   divRef: React.RefObject<HTMLDivElement>;
+  selectedModel: string;
+  setSelectedModel: (model: string) => void;
 }
 
 interface Props {
@@ -29,10 +31,12 @@ const ChatProvider: FC<Props> = ({ children }) => {
   const [error, setError] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
+  const [selectedModel, setSelectedModel] = useState('gemini-2.5-flash');
+
   //create a file called `config.ts` in /src and export
   //a variable called `apiKey` that contains your own key
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+  const model = genAI.getGenerativeModel({ model: selectedModel });
 
   useEffect(() => {
     scrollToBottom(divRef);
@@ -100,6 +104,8 @@ const ChatProvider: FC<Props> = ({ children }) => {
         setError,
         submitQuestion,
         divRef,
+        selectedModel,
+        setSelectedModel,
       }}
     >
       {children}
