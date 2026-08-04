@@ -31,7 +31,7 @@ const ChatProvider: FC<Props> = ({ children }) => {
   const [error, setError] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
-  const [selectedModel, setSelectedModel] = useState('gemini-2.5-flash');
+  const [selectedModel, setSelectedModel] = useState('gemini-3.5-flash');
 
   //create a file called `config.ts` in /src and export
   //a variable called `apiKey` that contains your own key
@@ -72,7 +72,9 @@ const ChatProvider: FC<Props> = ({ children }) => {
       const response = await result.response;
       markedAnswer = await marked(response.text());
     } catch (error) {
-      markedAnswer = "Sorry, Brian can't answer questions about that.";
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      markedAnswer = await marked(`**Error:** ${errorMessage}`);
       setError(true);
 
       //remove the last question since it's invalid in the conversation
