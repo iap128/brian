@@ -1,16 +1,68 @@
-body {
-	background-color: #fafafa;
-	height: 100vh;
+html,
+body,
+#root {
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
+body {
+	min-height: 100vh;
+	background-color: #f6f7fb;
+	background-image:
+		radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+		radial-gradient(1000px 500px at 100% 0%, rgba(139, 92, 246, 0.06), transparent 60%),
+		radial-gradient(900px 500px at 50% 110%, rgba(16, 185, 129, 0.05), transparent 60%);
+	background-attachment: fixed;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #1f2430;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(17, 24, 39, 0.12);
+	border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(17, 24, 39, 0.22);
+}
+
+@keyframes brian-dot-pulse {
+	0%,
+	80%,
 	100% {
-		background-position: 0% 50%;
+		transform: scale(0.6);
+		opacity: 0.4;
+	}
+	40% {
+		transform: scale(1);
+		opacity: 1;
 	}
 }
+
+.brian-typing-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: currentColor;
+	animation: brian-dot-pulse 1.2s infinite ease-in-out both;
+}
+
+.brian-typing-dot:nth-child(1) {
+	animation-delay: -0.32s;
+}
+
+.brian-typing-dot:nth-child(2) {
+	animation-delay: -0.16s;
+}
+
