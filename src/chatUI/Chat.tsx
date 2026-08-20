@@ -46,7 +46,13 @@ const Chat = () => {
 
       <Space size={6} align="center" style={{ color: token.colorTextTertiary, fontSize: 13 }}>
         <span>Made with ❤️ by</span>
-        <Button type="link" size="small" href="https://n818pe.com" style={{ padding: 0 }}>
+        <Button
+          type="dashed"
+          size="small"
+          href="https://n818pe.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Ryan Hunter
         </Button>
       </Space>
