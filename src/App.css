@@ -12,3 +12,22 @@
 		padding: 12px 12px 0;
 	}
 }
+
+.app-header {
+	padding: 0 24px;
+}
+
+@media (max-width: 480px) {
+	.app-header {
+		padding: 0 12px;
+		gap: 8px;
+	}
+
+	.app-model-select {
+		width: 108px !important;
+	}
+
+	.ant-btn > .new-chat-btn-label {
+		display: none;
+	}
+}

@@ -18,6 +18,7 @@ function App() {
   return (
     <Layout className="layout">
       <Header
+        className="app-header"
         style={{
           position: 'sticky',
           top: 0,
@@ -27,29 +28,39 @@ function App() {
           justifyContent: 'space-between',
           gap: 16,
           height: 64,
-          padding: '0 24px',
           background: 'rgba(255, 255, 255, 0.75)',
           backdropFilter: 'saturate(180%) blur(12px)',
           WebkitBackdropFilter: 'saturate(180%) blur(12px)',
           borderBottom: `1px solid ${token.colorBorderSecondary}`,
         }}
       >
-        <Space size={12} align="center">
+        <Space size={12} align="center" style={{ minWidth: 0, overflow: 'hidden' }}>
           <Avatar
             src="./robot.png"
             size={36}
             style={{
               backgroundColor: token.colorPrimaryBg,
               boxShadow: token.boxShadowSecondary,
+              flexShrink: 0,
             }}
           />
-          <Typography.Title level={4} style={{ margin: 0, fontWeight: 600 }}>
+          <Typography.Title
+            level={4}
+            style={{
+              margin: 0,
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
             Ask Brian
           </Typography.Title>
         </Space>
 
-        <Space size={10} align="center">
+        <Space size={10} align="center" style={{ flexShrink: 0 }}>
           <Select
+            className="app-model-select"
             onChange={changeModel}
             value={selectedModel}
             variant="filled"
@@ -73,7 +84,7 @@ function App() {
             ghost
             onClick={() => window.location.reload()}
           >
-            New Chat
+            <span className="new-chat-btn-label">New Chat</span>
           </Button>
         </Space>
       </Header>
