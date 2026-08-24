@@ -1,19 +1,38 @@
-import { PulseLoader } from 'react-spinners';
+import { Avatar, Flex, theme } from 'antd';
 
 const LoadingAnswer = () => {
+  const { token } = theme.useToken();
+
   return (
-    <div
-      style={{
-        padding: '5px 10px',
-        borderRadius: '10px',
-        marginBottom: '5px',
-        backgroundColor: '#e9e9eb',
-        alignSelf: 'flex-start',
-        width: 'fit-content',
-      }}
-    >
-      <PulseLoader speedMultiplier={0.75} size={10} />
-    </div>
+    <Flex align="flex-start" gap={12} style={{ margin: '10px 0' }}>
+      <Avatar
+        src="./robot.png"
+        size={36}
+        style={{
+          flexShrink: 0,
+          backgroundColor: token.colorPrimaryBg,
+          boxShadow: token.boxShadowSecondary,
+        }}
+      />
+
+      <div
+        style={{
+          padding: '12px 16px',
+          borderRadius: 16,
+          borderTopLeftRadius: 6,
+          background: token.colorFillQuaternary,
+          boxShadow: token.boxShadowSecondary,
+          color: token.colorTextTertiary,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+        }}
+      >
+        <span className="brian-typing-dot" />
+        <span className="brian-typing-dot" />
+        <span className="brian-typing-dot" />
+      </div>
+    </Flex>
   );
 };
 

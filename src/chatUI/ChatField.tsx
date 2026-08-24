@@ -1,8 +1,7 @@
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { Button, Input, Flex, Checkbox } from 'antd';
+import { ArrowUpOutlined } from '@ant-design/icons';
+import { Button, Input, Flex, Checkbox, theme } from 'antd';
 import { FC, useContext, useState } from 'react';
 import { ChatContext } from '../ChatContext';
-import { getScreenWidth } from '../utils/helpers';
 
 interface Props {
   field: string;
@@ -11,7 +10,8 @@ interface Props {
 }
 
 const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
-  const { messages } = useContext(ChatContext);
+  const { messages, loading } = useContext(ChatContext);
+  const { token } = theme.useToken();
 
   const [multiLine, setMultiLine] = useState(false);
 
@@ -20,21 +20,22 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
   return (
     <Flex
       vertical
-      gap={15}
+      gap={12}
       style={{
         position: hasMessages ? 'sticky' : 'static',
-        bottom: 10,
-        backgroundColor: 'white',
-        padding: '20px',
+        bottom: 12,
+        width: '100%',
+        padding: 14,
+        background: token.colorBgContainer,
+        border: `1px solid ${token.colorBorderSecondary}`,
         borderRadius: 20,
-        width: getScreenWidth() < 768 ? '100%' : '65%',
-        boxShadow: '0 8px 32px 0 lightgray',
-        marginBottom: '20px',
+        boxShadow: token.boxShadow,
       }}
     >
       <Input.TextArea
-        autoSize
-        placeholder='Enter your question'
+        autoSize={{ minRows: 1, maxRows: 8 }}
+        variant="borderless"
+        placeholder="Message Brian…"
         value={field}
         onChange={e => setField(e.target.value)}
         onPressEnter={event => {
@@ -43,17 +44,29 @@ const ChatField: FC<Props> = ({ field, setField, submitQuestion }) => {
             submitQuestion();
           }
         }}
+        style={{
+          padding: 4,
+          fontSize: 15,
+          resize: 'none',
+        }}
       />
 
-      <Flex justify='space-between' align='center'>
-        <Checkbox checked={multiLine} onChange={e => setMultiLine(e.target.checked)}>
+      <Flex justify="space-between" align="center" gap={12} wrap="wrap">
+        <Checkbox
+          checked={multiLine}
+          onChange={e => setMultiLine(e.target.checked)}
+          style={{ color: token.colorTextSecondary, fontSize: 13 }}
+        >
           Press enter for new line
         </Checkbox>
 
         <Button
-          disabled={!field}
-          icon={<ArrowRightOutlined />}
-          type='primary'
+          shape="circle"
+          size="large"
+          disabled={!field.trim()}
+          loading={loading}
+          icon={!loading ? <ArrowUpOutlined /> : undefined}
+          type="primary"
           onClick={submitQuestion}
         />
       </Flex>

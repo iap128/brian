@@ -13,10 +13,19 @@ const ChatMessages: FC<Props> = ({ divRef }) => {
   return (
     <div
       ref={divRef}
-      style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'scroll' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        padding: '16px 4px 8px',
+      }}
     >
       {messages.map((message, index) => (
-        <ChatBubble key={message.parts[0].text} message={message} error={error && index === messages.length - 2} />
+        <ChatBubble
+          key={message.parts[0].text}
+          message={message}
+          error={error && index === messages.length - 2}
+        />
       ))}
 
       {loading && <LoadingAnswer />}
